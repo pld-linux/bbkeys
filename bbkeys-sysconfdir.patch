@@ -1,0 +1,21 @@
+diff -ur bbkeys-0.8.4-orig/data/Makefile.am bbkeys-0.8.4/data/Makefile.am
+--- bbkeys-0.8.4-orig/data/Makefile.am	Sat Jan 12 16:29:25 2002
++++ bbkeys-0.8.4/data/Makefile.am	Wed Jan 23 20:50:45 2002
+@@ -1,4 +1,4 @@
+-configdir = $(datadir)/bbtools
++configdir = $(sysconfdir)/bbtools
+ 
+ config_DATA =	bbkeys.bb \
+ 		bbkeys.nobb
+diff -ur bbkeys-0.8.4-orig/src/Makefile.am bbkeys-0.8.4/src/Makefile.am
+--- bbkeys-0.8.4-orig/src/Makefile.am	Mon Nov  5 19:35:32 2001
++++ bbkeys-0.8.4/src/Makefile.am	Wed Jan 23 20:40:00 2002
+@@ -1,6 +1,6 @@
+ CPPFLAGS =	@CPPFLAGS@  @INTERLACE@ \
+-		-DGLOBAL_BB=\"$(datadir)/bbtools/bbkeys.bb\" \
+-		-DGLOBAL_NOBB=\"$(datadir)/bbtools/bbkeys.nobb\"
++		-DGLOBAL_BB=\"$(sysconfdir)/bbtools/bbkeys.bb\" \
++		-DGLOBAL_NOBB=\"$(sysconfdir)/bbtools/bbkeys.nobb\"
+ 
+ bin_PROGRAMS = bbkeys
+ bbkeys_SOURCES = bbkeys.cc Image.cc LinkedList.cc \
