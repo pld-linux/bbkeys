@@ -40,7 +40,7 @@ albo poprzez graficzny interfejs bbkeysconf (z braku lepszej nazwy).
 %build
 aclocal
 autoconf
-automake -a -c
+automake -a -c -f
 %configure
 %{__make} CXX="%{__cc}"
 
