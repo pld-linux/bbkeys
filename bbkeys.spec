@@ -30,7 +30,7 @@ bbkeys jest konfigurowalnym programem do przechwytywania klawiszy
 zaprojektowanym dla zarz±dcy okien blackbox, napisanego przez Brada
 Hughesa. Bazuje na kodzie obiektowym bbtools napisanym przez Johna
 Kennisa, u¿ywa tak¿e niektórych klas blackboksa. bbkeys s± ³atwo
-konfigurowalne przez bezpo¶redni±edycjê pliku u¿ytkownika ~/.bbkeysrc,
+konfigurowalne przez bezpo¶redni± edycjê pliku u¿ytkownika ~/.bbkeysrc,
 albo poprzez graficzny interfejs bbkeysconf (z braku lepszej nazwy).
 
 %prep
