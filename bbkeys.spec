@@ -10,7 +10,7 @@ Source0:	http://movingparts.thelinuxcommunity.org/bbkeys/%{name}-%{version}.tar.
 URL:		http://movingparts.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libstdc++-devel
+BuildRequires:	XFree86-devel
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_prefix		/usr/X11R6
@@ -31,7 +31,7 @@ autoconf
 automake -a -c
 %configure
 %build
-%{__make}
+%{__make} CXX="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
