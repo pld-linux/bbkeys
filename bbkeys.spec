@@ -2,7 +2,7 @@ Summary:	bbkeys, a completely configurable key-combo grabber for blackbox
 Summary(pl):	Ca³kowicie konfigurowalny przechwytywacz klawiszy dla blackboksa
 Name:		bbkeys
 Version:	0.8.6
-Release:	3
+Release:	4
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/bbkeys/%{name}-%{version}.tar.gz
@@ -16,8 +16,6 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_sysconfdir		/etc/default
 
 %description
 bbkeys is a configurable key-grabber designed for the blackbox window
@@ -37,14 +35,12 @@ konfigurowalne przez bezpo¶redni± edycjê pliku u¿ytkownika ~/.bbkeysrc,
 albo poprzez graficzny interfejs bbkeysconf (z braku lepszej nazwy).
 
 %prep
-%setup  -q
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
 %build
-rm -f missing
-cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf}
 %{__automake}
@@ -61,10 +57,21 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%triggerpostun -- bbkeys < 0.8.6-4
+if [ -f /etc/default/bbtools/bbkeys.bb.rpmsave ]; then
+	mv -f %{_sysconfdir}/bbtools/bbkeys.bb %{_sysconfdir}/bbtools/bbkeys.bb.rpmnew
+	mv -f /etc/default/bbtools/bbkeys.bb.rpmsave %{_sysconfdir}/bbtools/bbkeys.bb
+fi
+if [ -f /etc/default/bbtools/bbkeys.nobb.rpmsave ]; then
+	mv -f %{_sysconfdir}/bbtools/bbkeys.nobb %{_sysconfdir}/bbtools/bbkeys.nobb.rpmnew
+	mv -f /etc/default/bbtools/bbkeys.nobb.rpmsave %{_sysconfdir}/bbtools/bbkeys.nobb
+fi
+rmdir /etc/default/bbtools 2>/dev/null || :
+
 %files
 %defattr(644,root,root,755)
 %doc README AUTHORS ChangeLog NEWS TODO
 %dir %{_sysconfdir}/bbtools
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/bbtools/%{name}.*
 %attr(755,root,root) %{_bindir}/*
-%{_mandir}/*/*
+%{_mandir}/man[15]/*
