@@ -8,7 +8,7 @@ Group:		X11/Applications
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/bbkeys/%{name}-%{version}.tar.gz
 Patch0:		%{name}-sysconfdir.patch
 Patch1:		%{name}-ac_fixes.patch
-Patch2:		%{name}-home_etc.patch
+Patch2:		%{name}-etc_dir.patch
 URL:		http://bbkeys.sourceforge.net/
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
