@@ -2,7 +2,7 @@ Summary:	bbkeys, a completely configurable key-combo grabber for blackbox
 Summary(pl):	Ca³kowicie konfigurowalny przechwytywacz klawiszy dla blackboksa
 Name:		bbkeys
 Version:	0.8.4
-Release:	3
+Release:	4
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/bbkeys/%{name}-%{version}.tar.gz
@@ -38,7 +38,8 @@ albo poprzez graficzny interfejs bbkeysconf (z braku lepszej nazwy).
 %patch0 -p1
 
 %build
-aclocal
+rm -f missing
+%{__aclocal}
 %{__autoconf}
 %{__automake}
 %configure
@@ -49,14 +50,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
 
-gzip -9nf README AUTHORS ChangeLog NEWS TODO
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc README AUTHORS ChangeLog NEWS TODO
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/*/*
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/bbtools/%{name}.*
