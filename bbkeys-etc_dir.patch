@@ -1,0 +1,116 @@
+diff -Nru bbkeys-0.8.6/src/Baseresource.cc bbkeys-0.8.6.new/src/Baseresource.cc
+--- bbkeys-0.8.6/src/Baseresource.cc	Sun Jun  2 00:52:48 2002
++++ bbkeys-0.8.6.new/src/Baseresource.cc	Sun Mar 23 15:36:00 2003
+@@ -45,8 +45,14 @@
+       ResourceType=BBTOOLS;
+   } else {
+     char *homedir = getenv("HOME");
+-    bbtool->config_filename = new char[strlen(homedir) + 32];
+-    sprintf(bbtool->config_filename, "%s/.blackboxrc", homedir);
++    char *etc_dir = getenv("ETC_DIR");
++    if (etc_dir != NULL) {
++      bbtool->config_filename = new char[strlen(etc_dir) + 32];
++      sprintf(bbtool->config_filename, "%s/blackboxrc", etc_dir);
++    } else {
++      bbtool->config_filename = new char[strlen(homedir) + 32];
++      sprintf(bbtool->config_filename, "%s/.blackboxrc", homedir);
++    }
+     if ((resource_db = XrmGetFileDatabase(bbtool->config_filename))!=NULL) {
+       ReadBlackboxResource();
+       ResourceType=BLACKBOX;
+@@ -243,11 +249,20 @@
+   else {
+     delete [] style.conf_filename;
+     char *homedir = getenv("HOME");
+-    int len=strlen(homedir) + strlen(BBTOOL_LOCAL);
+-
+-    style.conf_filename = new char[len+2];
+-    memset(style.conf_filename, 0, len + 2);
+-    sprintf(style.conf_filename, "%s/%s", homedir,BBTOOL_LOCAL);
++    char *etc_dir = getenv("ETC_DIR");
++    int len;
++    
++    if (etc_dir != NULL) {
++      len=strlen(etc_dir) + strlen(BBTOOL_ETC_DIR);
++      style.conf_filename = new char[len+2];
++      memset(style.conf_filename, 0, len + 2);
++      sprintf(style.conf_filename, "%s/%s", etc_dir,BBTOOL_ETC_DIR);
++    } else {
++      len=strlen(homedir) + strlen(BBTOOL_LOCAL);
++      style.conf_filename = new char[len+2];
++      memset(style.conf_filename, 0, len + 2);
++      sprintf(style.conf_filename, "%s/%s", homedir,BBTOOL_LOCAL);
++    }
+     if ((resource_db = XrmGetFileDatabase(style.conf_filename))==NULL) {
+       delete [] style.conf_filename;
+       int len=strlen(GLOBAL_NOBB);
+@@ -286,10 +301,20 @@
+   } else {
+     delete [] style.conf_filename;
+     char *homedir = getenv("HOME");
+-    int len=strlen(homedir) + strlen(BLACKBOX_LOCAL); 
+-    style.conf_filename = new char[len+2];
+-    memset(style.conf_filename, 0, len + 2);
+-    sprintf(style.conf_filename, "%s/%s", homedir,BLACKBOX_LOCAL);
++    char *etc_dir = getenv("ETC_DIR");
++    int len;
++    
++    if (etc_dir != NULL) {
++      len=strlen(etc_dir) + strlen(BLACKBOX_ETC_DIR); 
++      style.conf_filename = new char[len+2];
++      memset(style.conf_filename, 0, len + 2);
++      sprintf(style.conf_filename, "%s/%s", etc_dir,BLACKBOX_ETC_DIR);
++    } else {
++      len=strlen(homedir) + strlen(BLACKBOX_LOCAL); 
++      style.conf_filename = new char[len+2];
++      memset(style.conf_filename, 0, len + 2);
++      sprintf(style.conf_filename, "%s/%s", homedir,BLACKBOX_LOCAL);
++    }
+     if ((db = XrmGetFileDatabase(style.conf_filename))==NULL) {
+       delete [] style.conf_filename;
+       int len=strlen(GLOBAL_BB);
+diff -Nru bbkeys-0.8.6/src/Baseresource.hh bbkeys-0.8.6.new/src/Baseresource.hh
+--- bbkeys-0.8.6/src/Baseresource.hh	Tue Oct  8 02:06:41 2002
++++ bbkeys-0.8.6.new/src/Baseresource.hh	Sun Mar 23 15:31:53 2003
+@@ -47,6 +47,8 @@
+ 
+ #define BBTOOL_LOCAL ".bbtools/bbkeys.nobb"
+ #define BLACKBOX_LOCAL ".bbtools/bbkeys.bb"
++#define BBTOOL_ETC_DIR "bbtools/bbkeys.nobb"
++#define BLACKBOX_ETC_DIR "bbtools/bbkeys.bb"
+ 
+ class ToolWindow;
+ class BImageControl;
+diff -Nru bbkeys-0.8.6/src/bbkeys.cc bbkeys-0.8.6.new/src/bbkeys.cc
+--- bbkeys-0.8.6/src/bbkeys.cc	Tue Oct 15 19:23:16 2002
++++ bbkeys-0.8.6.new/src/bbkeys.cc	Sun Mar 23 15:28:04 2003
+@@ -817,9 +817,15 @@
+ 	timer->fireOnce(True);
+ 	
+ 	if (!(options->bbkeysrc)){
++		char *etc_dir = getenv("ETC_DIR");
+ 		char *homedir = getenv("HOME");
+-		bbkeys_rcfile = new char[strlen(homedir) + 32];
+-		sprintf(bbkeys_rcfile, "%s/.bbkeysrc", homedir);
++		if (etc_dir != NULL) {
++			bbkeys_rcfile = new char[strlen(etc_dir) + 32];
++			sprintf(bbkeys_rcfile, "%s/bbkeysrc", etc_dir);
++		} else {
++			bbkeys_rcfile = new char[strlen(homedir) + 32];
++			sprintf(bbkeys_rcfile, "%s/.bbkeysrc", homedir);
++		}
+ 	} else {
+ 		bbkeys_rcfile = options->bbkeysrc;
+ 	}
+diff -Nru bbkeys-0.8.6/src/bbkeysconf.pl.in bbkeys-0.8.6.new/src/bbkeysconf.pl.in
+--- bbkeys-0.8.6/src/bbkeysconf.pl.in	Sun Jan 13 18:59:39 2002
++++ bbkeys-0.8.6.new/src/bbkeysconf.pl.in	Sun Mar 23 15:25:49 2003
+@@ -43,7 +43,7 @@
+ # prototypes
+ sub trim;
+ 
+-my $bbkeysrc = $ENV{HOME} . "/.bbkeysrc";
++my $bbkeysrc = ($ENV{ETC_DIR} ? $ENV{ETC_DIR} . "/bbkeysrc" : $ENV{HOME} . "/.bbkeysrc");
+ 
+ # get the keyconfig file from the commandline, or use the default
+ for ( $i=0; $i< @ARGV; $i++) {
