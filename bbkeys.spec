@@ -44,6 +44,7 @@ albo poprzez graficzny interfejs bbkeysconf (z braku lepszej nazwy).
 
 %build
 rm -f missing
+cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf}
 %{__automake}
