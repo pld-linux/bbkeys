@@ -19,3 +19,27 @@ diff -ur bbkeys-0.8.4-orig/src/Makefile.am bbkeys-0.8.4/src/Makefile.am
  
  bin_PROGRAMS = bbkeys
  bbkeys_SOURCES = bbkeys.cc Image.cc LinkedList.cc \
+--- bbkeys-0.8.6/doc/bbkeys.1.in~	Sun Feb  2 00:32:03 2003
++++ bbkeys-0.8.6/doc/bbkeys.1.in	Sun Feb  2 00:32:03 2003
+@@ -70,19 +70,17 @@
+ 
+ .SH FILES
+ .nr
+-Default: \fI$datadir=/usr/local/share/\fR
+-.br
+ \fI$HOME/.bbkeysrc\fR maintains keybindings
+ .br
+ See \fIbbkeysrc(5)\fR
+ .SS "Under Blackbox"
+ .nf
+-\fI$datadir/bbtools/bbkeys.bb\fR the global style configuration file
++\fI@sysconfdir@/bbtools/bbkeys.bb\fR the global style configuration file
+ \fI$HOME/.bbtools/bbkeys.bb\fR a local style configuration file
+ 
+ .SS "Under other Window managers"
+ .nf
+-\fI$datadir/bbtools/bbkeys.nobb\fR the global style configuration file
++\fI@sysconfdir@/bbtools/bbkeys.nobb\fR the global style configuration file
+ \fI$HOME/.bbtools/bbkeys.nobb\fR a local style configuration file
+ 
+ .SH VERSION
