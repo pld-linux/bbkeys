@@ -6,6 +6,7 @@ Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://dl.sourceforge.net/bbkeys/%{name}-%{version}.tar.gz
+# Source0-md5:	6df58a99d136f21682b859b823d31b7d
 Patch0:		%{name}-sysconfdir.patch
 Patch1:		%{name}-ac_fixes.patch
 Patch2:		%{name}-etc_dir.patch
