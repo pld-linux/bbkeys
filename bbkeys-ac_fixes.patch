@@ -1,0 +1,67 @@
+--- bbkeys-0.8.6/configure.in~	Sun Feb  2 00:20:45 2003
++++ bbkeys-0.8.6/configure.in	Sun Feb  2 00:20:45 2003
+@@ -1,7 +1,6 @@
+ dnl Process this file with autoconf to produce a configure script.
+ AC_INIT(src/bbkeys.cc)
+ AM_INIT_AUTOMAKE(bbkeys, 0.8.6)
+-AC_REQUIRE([AC_CANONICAL_HOST])
+ AM_MAINTAINER_MODE
+ AC_PREFIX_DEFAULT(/usr/local)
+ 
+@@ -10,56 +10,6 @@
+  AC_MSG_ERROR([error. sed is required to build the default bbtoolsrc file.])
+ fi
+ 
+-dnl get the debug values right
+-AC_DEFUN(AC_SET_DEBUG,
+-[
+-  _CFLAGS="-g -Wall -DDEBUG"
+-  _CXXFLAGS="-g -Wall -DDEBUG"
+-  _LDFLAGS=""
+-  case $host_os in
+-  [*solaris*)]
+-    dnl On solaris, we get a ton of multiply-defined errors if we don't include
+-    dnl this parameter
+-    _LDFLAGS="$_LDFLAGS -z muldefs"
+-    ;;
+-  esac
+-  test "$CFLAGS" = "" && CFLAGS=$_CFLAGS
+-  test "$CXXFLAGS" = "" && CXXFLAGS=$_CXXFLAGS
+-  test "$LDFLAGS" = "" && LDFLAGS=$_LDFLAGS
+-])
+-
+-AC_DEFUN(AC_SET_NODEBUG,
+-[
+-  _CFLAGS="-DNDEBUG"
+-  _CXXFLAGS="-DNDEBUG"
+-  _LDFLAGS=""
+-  case $host_os in
+-  [*solaris*)]
+-     _CFLAGS="$_CFLAGS -O"
+-     _CXXFLAGS="$_CXXFLAGS -O"
+-     dnl On solaris, we get a ton of multiply-defined errors if we don't include
+-     dnl this parameter
+-     _LDFLAGS="$_LDFLAGS -z muldefs"
+-     ;;
+-  [*)]
+-     _CFLAGS="$_CFLAGS -O2"
+-     _CXXFLAGS="$_CXXFLAGS -O2"
+-     ;;
+-  esac
+-  test "$CFLAGS" = "" && CFLAGS=$_CFLAGS
+-  test "$CXXFLAGS" = "" && CXXFLAGS=$_CXXFLAGS
+-  test "$LDFLAGS" = "" && LDFLAGS=$_LDFLAGS
+-])
+-
+-AC_ARG_ENABLE(debug,[  --enable-debug	create debugging code [default=no]],
+-[
+-if test $enableval = "no";
+- then AC_SET_NODEBUG
+- else AC_SET_DEBUG
+-fi
+-],
+-AC_SET_NODEBUG)
+-
+ dnl Check for Interlacing
+ INTERLACE=""
+ AC_MSG_CHECKING([whether to include interlacing image code])
