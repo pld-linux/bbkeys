@@ -1,18 +1,21 @@
 Summary:	bbkeys, a completely configurable key-combo grabber for blackbox
 Summary(pl):	Ca³kowicie konfigurowalny przechwytywacz klawiszy dla blackboksa
 Name:		bbkeys
-Version:	0.8.4
-Release:	4
+Version:	0.8.6
+Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/bbkeys/%{name}-%{version}.tar.gz
 Patch0:		%{name}-sysconfdir.patch
+Patch1:		%{name}-ac_fixes.patch
 URL:		http://bbkeys.sourceforge.net/
+BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	XFree86-devel
+BuildRequires:	libstdc++-devel
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		_sysconfdir		/etc/default
 
 %description
 bbkeys is a configurable key-grabber designed for the blackbox window
@@ -32,16 +35,18 @@ konfigurowalne przez bezpo¶redni± edycjê pliku u¿ytkownika ~/.bbkeysrc,
 albo poprzez graficzny interfejs bbkeysconf (z braku lepszej nazwy).
 
 %prep
-%setup -q
+%setup  -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 rm -f missing
 %{__aclocal}
 %{__autoconf}
 %{__automake}
+CXXFLAGS="%{rpmcflags} -fno-rtti -fno-exceptions"
 %configure
-%{__make} CXX="%{__cc}"
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -54,6 +59,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README AUTHORS ChangeLog NEWS TODO
+%dir %{_sysconfdir}/bbtools
+%config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/bbtools/%{name}.*
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/*/*
-%config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/bbtools/%{name}.*
