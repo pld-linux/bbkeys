@@ -22,7 +22,7 @@ bbkeys is a configurable key-grabber designed for the blackbox window
 manager which is written by Brad Hughes. It is based on the bbtools
 object code created by John Kennis and re-uses some of the blackbox
 window manager classes as well. bbkeys is easily configurable via
-directly hand-editting the user's ~/.bbkeysrc file, or by using the
+directly hand-editing the user's ~/.bbkeysrc file, or by using the
 provided gui configuration tool, bbkeysconf (for lack of a better name
 yet).
 
