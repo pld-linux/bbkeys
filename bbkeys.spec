@@ -1,4 +1,5 @@
 Summary:	bbkeys, a completely configurable key-combo grabber for blackbox
+Summary(pl):	Ca³kowicie konfigurowalny przechwytywacz klawiszy dla blackboksa
 Name:		bbkeys
 Version:	0.8.3
 Release:	1
@@ -23,6 +24,14 @@ window manager classes as well. bbkeys is easily configurable via
 directly hand-editting the user's ~/.bbkeysrc file, or by using the
 provided gui configuration tool, bbkeysconf (for lack of a better name
 yet).
+
+%description -l pl
+bbkeys jest konfigurowalnym programem do przechwytywania klawiszy
+zaprojektowanym dla zarz±dcy okien blackbox, napisanego przez Brada
+Hughesa. Bazuje na kodzie obiektowym bbtools napisanym przez Johna
+Kennisa, u¿ywa tak¿e niektórych klas blackboksa. bbkeys s± ³atwo
+konfigurowalne przez bezpo¶redni±edycjê pliku u¿ytkownika ~/.bbkeysrc,
+albo poprzez graficzny interfejs bbkeysconf (z braku lepszej nazwy).
 
 %prep
 %setup -q
