@@ -1,0 +1,46 @@
+Summary:	bbkeys, a completely configurable key-combo grabber for blackbox
+Name:		bbkeys
+Version:	0.3.6
+Release:	1
+License:	GPL
+Group:		X11/Applications
+Group(de):	X11/Applikationen
+Group(pl):	X11/Aplikacje
+Source0:	http://movingparts.net/bbkeys/%{name}-%{version}.tar.gz
+URL:		http://movingparts.net
+Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_prefix /usr/X11R6
+
+%description
+bbkeys is a configurable key-grabber designed for the blackbox window
+manager which is written by Brad Hughes. It is based on the bbtools
+object code created by John Kennis and re-uses some of the blackbox
+window manager classes as well. bbkeys is easily configurable via
+directly hand-editting the user's ~/.bbkeysrc file, or by using the
+provided gui configuration tool, bbkeysconf (for lack of a better name
+yet).
+%prep
+%setup -q
+aclocal
+autoconf
+automake -a -c
+%configure
+%build
+%{__make}
+
+%install
+rm -rf $RPM_BUILD_ROOT
+
+%{__make} DESTDIR=$RPM_BUILD_ROOT install
+
+gzip -9nf README
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(644,root,root,755)
+%doc *.gz
+%attr(755,root,root) %{_bindir}/*
+%{_datadir}/bbtools/%{name}.*
