@@ -6,11 +6,14 @@ License:	GPL
 Group:		X11/Applications
 Group(de):	X11/Applikationen
 Group(pl):	X11/Aplikacje
-Source0:	http://movingparts.net/bbkeys/%{name}-%{version}.tar.gz
-URL:		http://movingparts.net
+Source0:	http://movingparts.thelinuxcommunity.org/bbkeys/%{name}-%{version}.tar.gz
+URL:		http://movingparts.net/
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libstdc++-devel
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_prefix /usr/X11R6
+%define		_prefix		/usr/X11R6
 
 %description
 bbkeys is a configurable key-grabber designed for the blackbox window
@@ -20,6 +23,7 @@ window manager classes as well. bbkeys is easily configurable via
 directly hand-editting the user's ~/.bbkeysrc file, or by using the
 provided gui configuration tool, bbkeysconf (for lack of a better name
 yet).
+
 %prep
 %setup -q
 aclocal
