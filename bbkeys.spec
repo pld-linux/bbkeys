@@ -31,8 +31,9 @@ bbkeys jest konfigurowalnym programem do przechwytywania klawiszy
 zaprojektowanym dla zarz±dcy okien blackbox, napisanego przez Brada
 Hughesa. Bazuje na kodzie obiektowym bbtools napisanym przez Johna
 Kennisa, u¿ywa tak¿e niektórych klas blackboksa. bbkeys s± ³atwo
-konfigurowalne przez bezpo¶redni± edycjê pliku u¿ytkownika ~/.bbkeysrc,
-albo poprzez graficzny interfejs bbkeysconf (z braku lepszej nazwy).
+konfigurowalne przez bezpo¶redni± edycjê pliku u¿ytkownika
+~/.bbkeysrc, albo poprzez graficzny interfejs bbkeysconf (z braku
+lepszej nazwy).
 
 %prep
 %setup -q
@@ -72,6 +73,6 @@ rmdir /etc/default/bbtools 2>/dev/null || :
 %defattr(644,root,root,755)
 %doc README AUTHORS ChangeLog NEWS TODO
 %dir %{_sysconfdir}/bbtools
-%config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/bbtools/%{name}.*
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bbtools/%{name}.*
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man[15]/*
