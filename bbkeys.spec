@@ -1,5 +1,5 @@
 Summary:	bbkeys, a completely configurable key-combo grabber for blackbox
-Summary(pl.UTF-8):   Całkowicie konfigurowalny przechwytywacz klawiszy dla blackboksa
+Summary(pl.UTF-8):	Całkowicie konfigurowalny przechwytywacz klawiszy dla blackboksa
 Name:		bbkeys
 Version:	0.8.6
 Release:	4
